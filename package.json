@@ -1,15 +1,15 @@
 {
   "name": "@lu7766lu7766/adonis-repository",
-  "version": "1.1.0",
+  "version": "1.1.6",
   "description": "",
   "main": "build/providers/RepositoryProvider.js",
   "scripts": {
     "clean": "rm -rf build",
     "build": "tsc",
     "publish": "npm publish --access public",
-    "deploy": "npm run clean && npm version minor && npm run build && npm run publish"
+    "deploy": "npm run clean && npm run build && npm version patch && npm run publish"
   },
-  "types": "./build/adonis-typings/database.d.ts",
+  "types": "./build/adonis-typings/index.d.ts",
   "files": [
     "build/adonis-typings",
     "build/providers",
@@ -26,8 +26,9 @@
   "license": "ISC",
   "dependencies": {
     "@adonisjs/core": "^5.1.6",
-    "@adonisjs/lucid": "^18.1.0",
+    "@adonisjs/lucid": "^18.3.0",
     "@adonisjs/mrm-preset": "^5.0.3",
+    "@adonisjs/repl": "^3.1.11",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
     "typescript": "^4.2.4"
