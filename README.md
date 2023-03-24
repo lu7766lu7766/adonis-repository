@@ -1,6 +1,6 @@
 # Adonis Repository
 
-adonisjs lucid is very strog, but it do too much, and hard to extend, so i refer nestJs's repository, and build this to share model responsibility
+adonisjs lucid is very strong, but it do too much and hard to extend, so i refer nestJs's repository, and build this to share model responsibility
 
 ## 📦 Installing
 
