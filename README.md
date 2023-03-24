@@ -42,8 +42,10 @@ class Controller {
 
 ```ts
 // Controller.ts
+import { inject } from "@adonisjs/fold"
 import { InjectRepository, Repository } from "@ioc:Adonis/Repository"
 import User from "App/Models/User"
+@inject()
 class Controller {
   constructor(@InjectRepository(User) private repo: Repository<typeof User>) {}
 
