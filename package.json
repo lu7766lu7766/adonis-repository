@@ -1,10 +1,13 @@
 {
   "name": "@lu7766lu7766/adonis-repository",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "build/providers/RepositoryProvider.js",
   "scripts": {
-    "build": "tsc"
+    "clean": "rm -rf build",
+    "build": "tsc",
+    "publish": "npm publish --access public",
+    "deploy": "npm run clean && npm version minor && npm run build && npm run publish"
   },
   "types": "./build/adonis-typings/database.d.ts",
   "files": [

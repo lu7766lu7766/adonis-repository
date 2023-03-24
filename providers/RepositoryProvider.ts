@@ -1,5 +1,7 @@
 import "reflect-metadata"
 import { ApplicationContract } from "@ioc:Adonis/Core/Application"
+import { InjectRepository } from "../src/Decorator/InjectRepository"
+import { Repository } from "../src/Repository"
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,7 @@ export default class ClassValidatorProvider {
 
   public async boot() {
     this.bindExtend()
+    this.bindRepository()
   }
 
   /**
@@ -47,6 +50,15 @@ export default class ClassValidatorProvider {
     })
     ModelQueryBuilder.macro("exists", async function () {
       return (await this.getCount()) > 0
+    })
+  }
+
+  private bindRepository() {
+    this.app.container.bind("Adonis/Repository", () => {
+      return {
+        InjectRepository,
+        Repository,
+      }
     })
   }
 }
