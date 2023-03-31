@@ -1,6 +1,6 @@
 {
   "name": "@lu7766lu7766/adonis-repository",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "description": "",
   "main": "build/providers/RepositoryProvider.js",
   "scripts": {
@@ -9,6 +9,11 @@
     "publish": "npm publish --access public",
     "deploy": "npm run clean && npm run build && npm version patch && npm run publish"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lu7766lu7766/adonis-repository.git"
+  },
+  "homepage": "https://github.com/lu7766lu7766/adonis-repository.git",
   "types": "./build/adonis-typings/index.d.ts",
   "files": [
     "build/adonis-typings",

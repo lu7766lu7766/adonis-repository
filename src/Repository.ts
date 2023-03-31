@@ -78,6 +78,7 @@ export class Repository<T extends LucidModel> {
           })
         : query.orderBy(this.sortKey, this.sortType)
     }
+    this.condition = {}
     return query
   }
 
@@ -91,6 +92,7 @@ export class Repository<T extends LucidModel> {
         target.constructor === Array ? query.whereIn(key, target as StrictValues[]) : query.where(key, target as StrictValues)
       })
     }
+    this.condition = {}
     return query.getCount()
   }
 
