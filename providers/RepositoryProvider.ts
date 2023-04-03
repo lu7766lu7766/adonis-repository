@@ -3,6 +3,7 @@ import { ApplicationContract } from "@ioc:Adonis/Core/Application"
 import { InjectRepository } from "../src/Decorator/InjectRepository"
 import { Repository } from "../src/Repository"
 import _ from "lodash"
+import { DateTime } from "luxon"
 /*
 |--------------------------------------------------------------------------
 | Provider
@@ -36,28 +37,22 @@ export default class ClassValidatorProvider {
    */
   private bindExtend() {
     const DB = this.app.container.use("Adonis/Lucid/Database")
-    const { DatabaseQueryBuilder, ModelQueryBuilder } = DB
-    DatabaseQueryBuilder.macro("getTotal", async function () {
-      const res = await this.count("* as total").first()
-      return res?.total.valueOf() || 0
-    })
+    const { ModelQueryBuilder } = DB
+
     ModelQueryBuilder.macro("getTotal", async function () {
       const res = await this.count("* as total").first()
       return res?.$extras.total.valueOf() || 0
     })
-    DatabaseQueryBuilder.macro("exists", async function () {
-      return (await this.getTotal()) > 0
-    })
     ModelQueryBuilder.macro("exists", async function () {
       return (await this.getTotal()) > 0
     })
-    DatabaseQueryBuilder.macro("pager", function ({ page, perPage }) {
+    ModelQueryBuilder.macro("pager", function ({ page, perPage }) {
       if (typeof page !== "undefined" && typeof perPage != "undefined") {
         this.offset((page - 1) * perPage).limit(perPage)
       }
       return this
     })
-    DatabaseQueryBuilder.macro("sort", function ({ sortKey, sortType }) {
+    ModelQueryBuilder.macro("sort", function ({ sortKey, sortType }) {
       if (typeof sortKey !== "undefined" && typeof sortType !== "undefined") {
         if (sortKey.constructor === Array) {
           sortKey.forEach((key, i) => {
@@ -69,7 +64,7 @@ export default class ClassValidatorProvider {
       }
       return this
     })
-    DatabaseQueryBuilder.macro("condiction", function (condiction) {
+    ModelQueryBuilder.macro("condiction", function (condiction) {
       const { subQuery, ...condictions } = _.pickBy(condiction)
 
       subQuery?.(this)

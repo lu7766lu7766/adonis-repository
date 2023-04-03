@@ -1,5 +1,5 @@
 import { TransactionClientContract } from "@ioc:Adonis/Lucid/Database"
-import { LucidModel, ModelAssignOptions, ModelAttributes, ModelQueryBuilderContract } from "@ioc:Adonis/Lucid/Orm"
+import { LucidModel, ModelAssignOptions, ModelAttributes } from "@ioc:Adonis/Lucid/Orm"
 
 export class Repository<T extends LucidModel> {
   constructor(private staticSourceModel: T) {}
@@ -31,8 +31,6 @@ export class Repository<T extends LucidModel> {
   query() {
     return this.staticSourceModel.query()
   }
-
-  protected whereBuilder(_query: ModelQueryBuilderContract<T, InstanceType<T>>, _body: any) {}
 
   mergeSave(row: InstanceType<T>, body: Partial<ModelAttributes<InstanceType<T>>>) {
     this.trx && row.useTransaction(this.trx)

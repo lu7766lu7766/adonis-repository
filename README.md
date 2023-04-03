@@ -52,7 +52,7 @@ class Controller {
   getList() {
     return this.repo
       .query()
-      .paginate({ page: 1; perPage: 20 })
+      .pager({ page: 1; perPage: 20 })
       .sort({ sortKey: "created_ad"; sortType: "desc" })
       .condiction({
         id: [1, 3, 5, 7], // whereIn("id", [1, 3, 5, 7])

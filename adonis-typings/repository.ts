@@ -5,13 +5,7 @@
 declare module "@ioc:Adonis/Repository" {
   import { StrictValues, TransactionClientContract } from "@ioc:Adonis/Lucid/Database"
   import { LucidModel, ModelAssignOptions, ModelAttributes, ModelQueryBuilderContract } from "@ioc:Adonis/Lucid/Orm"
-  import { Dictionary } from "lodash"
-  type iSubQuery<T extends LucidModel> = (query: ModelQueryBuilderContract<T>) => void
-  type iCondition<T extends LucidModel> = {
-    [k in keyof Partial<InstanceType<T>>]: StrictValues[] | StrictValues
-  } & {
-    subQuery?: iSubQuery<T>
-  }
+
   class Repository<T extends LucidModel> {
     private staticSourceModel
     constructor(staticSourceModel: T)
@@ -25,17 +19,7 @@ declare module "@ioc:Adonis/Repository" {
       options?: ModelAssignOptions | undefined
     ): Promise<InstanceType<T>>
     query(): ModelQueryBuilderContract<T, InstanceType<T>>
-    condition: Dictionary<StrictValues | StrictValues[] | ((query: ModelQueryBuilderContract<T, InstanceType<T>>) => void) | undefined>
-    where(condition: iCondition<T>): this
-    offset: any
-    perPage: any
-    paginate(body: { page?: number; perPage?: number }): this
-    sortKey: any
-    sortType: any
-    sort(body: { sortKey?: string; sortType?: string }): this
-    getList(): ModelQueryBuilderContract<T>
-    getTotal(): Promise<number>
-    protected whereBuilder(_query: ModelQueryBuilderContract<T, InstanceType<T>>, _body: any): void
+
     mergeSave(row: InstanceType<T>, body: Partial<ModelAttributes<InstanceType<T>>>): Promise<InstanceType<T>>
     merge(row: InstanceType<T>, body: Partial<ModelAttributes<InstanceType<T>>>): InstanceType<T>
     save(row: InstanceType<T>): Promise<InstanceType<T>>
