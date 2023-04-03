@@ -51,16 +51,16 @@ class Controller {
 
   getList() {
     return this.repo
-      .where({
+      .query()
+      .paginate({ page: 1; perPage: 20 })
+      .sort({ sortKey: "created_ad"; sortType: "desc" })
+      .condiction({
         id: [1, 3, 5, 7], // whereIn("id", [1, 3, 5, 7])
         is_active: true, // where("is_active", true)
         subQuery(query) {
           // custom query
         },
       })
-      .paginate({ page: 1; perPage: 20 })
-      .sort({ sortKey: "created_ad"; sortType: "desc" })
-      .getList() // reutrn collection
   }
 
   getTotal() {

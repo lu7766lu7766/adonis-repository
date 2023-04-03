@@ -1,11 +1,6 @@
-import { StrictValues, TransactionClientContract } from "@ioc:Adonis/Lucid/Database"
+import { TransactionClientContract } from "@ioc:Adonis/Lucid/Database"
 import { LucidModel, ModelAssignOptions, ModelAttributes, ModelQueryBuilderContract } from "@ioc:Adonis/Lucid/Orm"
-import _, { Dictionary } from "lodash"
 
-type iSubQuery<T extends LucidModel> = (query: ModelQueryBuilderContract<T>) => void
-type iCondition<T extends LucidModel> = {
-  [k in keyof Partial<InstanceType<T>>]: StrictValues[] | StrictValues
-} & { subQuery?: iSubQuery<T> }
 export class Repository<T extends LucidModel> {
   constructor(private staticSourceModel: T) {}
 
@@ -35,65 +30,6 @@ export class Repository<T extends LucidModel> {
 
   query() {
     return this.staticSourceModel.query()
-  }
-
-  condition: Dictionary<StrictValues | StrictValues[] | ((query: ModelQueryBuilderContract<T, InstanceType<T>>) => void) | undefined>
-  where(condition: iCondition<T>) {
-    this.condition = _.pickBy(condition)
-    return this
-  }
-  offset
-  perPage
-  paginate(body: { page?: number; perPage?: number }) {
-    const { page = 1, perPage = 0 } = body
-    this.offset = (page - 1) * perPage
-    this.perPage = perPage
-    return this
-  }
-  sortKey
-  sortType
-  sort(body: { sortKey?: string; sortType?: string }) {
-    this.sortKey = body.sortKey
-    this.sortType = body.sortType
-    return this
-  }
-
-  getList(): ModelQueryBuilderContract<T> {
-    const query = this.staticSourceModel.query()
-    if (this.condition) {
-      const { subQuery, ...conditions } = this.condition
-      subQuery && (subQuery as (query: ModelQueryBuilderContract<T>) => void)(query)
-      Object.keys(conditions).forEach((key) => {
-        const target = this.condition[key]!
-        target.constructor === Array ? query.whereIn(key, target as StrictValues[]) : query.where(key, target as StrictValues)
-      })
-    }
-    if (typeof this.perPage != "undefined" && this.perPage > 0 && typeof this.offset != "undefined") {
-      query.offset(this.offset).limit(this.perPage)
-    }
-    if (this.sortKey && this.sortType) {
-      this.sortKey.constructor == Array
-        ? this.sortKey.forEach((_x, i) => {
-            query.orderBy(this.sortKey[i], this.sortType[i])
-          })
-        : query.orderBy(this.sortKey, this.sortType)
-    }
-    this.condition = {}
-    return query
-  }
-
-  getTotal(): Promise<number> {
-    const query = this.staticSourceModel.query()
-    if (this.condition) {
-      const { subQuery, ...conditions } = this.condition
-      subQuery && (subQuery as (query: ModelQueryBuilderContract<T>) => void)(query)
-      Object.keys(conditions).forEach((key) => {
-        const target = this.condition[key]!
-        target.constructor === Array ? query.whereIn(key, target as StrictValues[]) : query.where(key, target as StrictValues)
-      })
-    }
-    this.condition = {}
-    return query.getCount()
   }
 
   protected whereBuilder(_query: ModelQueryBuilderContract<T, InstanceType<T>>, _body: any) {}
