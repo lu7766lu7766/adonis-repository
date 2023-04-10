@@ -3,7 +3,7 @@
 /// <reference types="@adonisjs/lucid" />
 
 declare module "@ioc:Adonis/Repository" {
-  import { StrictValues, TransactionClientContract } from "@ioc:Adonis/Lucid/Database"
+  import { TransactionClientContract } from "@ioc:Adonis/Lucid/Database"
   import { LucidModel, ModelAssignOptions, ModelAttributes, ModelQueryBuilderContract } from "@ioc:Adonis/Lucid/Orm"
 
   class Repository<T extends LucidModel> {
@@ -47,7 +47,7 @@ declare module "@ioc:Adonis/Repository" {
     deleteBy(propKey: string, values: Array<number | string>): Promise<number[]>
     deleteBy(where: { [m: string]: string | number | Array<string | number> }): Promise<number[]>
   }
-  function InjectRepository<T extends LucidModel>(model: T): (target: Object, propKey: string, index?: number) => void
+  function InjectRepository<T extends LucidModel>(model: T): (target: Object, propKey?: string, index?: number) => void
 
   export { InjectRepository, Repository }
 }
