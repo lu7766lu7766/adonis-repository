@@ -3,7 +3,6 @@ import { ApplicationContract } from "@ioc:Adonis/Core/Application"
 import { InjectRepository } from "../src/Decorator/InjectRepository"
 import { Repository } from "../src/Repository"
 import _ from "lodash"
-import { DateTime } from "luxon"
 /*
 |--------------------------------------------------------------------------
 | Provider
