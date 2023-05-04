@@ -1,13 +1,13 @@
 {
   "name": "@lu7766lu7766/adonis-repository",
-  "version": "2.3.2",
+  "version": "2.4.0",
   "description": "",
   "main": "build/providers/RepositoryProvider.js",
   "scripts": {
     "clean": "rm -rf build",
     "build": "tsc",
-    "publish": "npm publish --access public",
-    "deploy": "npm run clean && npm run build && npm version patch && npm run publish"
+    "deploy:npm": "npm publish --access public",
+    "deploy": "yarn clean && yarn build && npm version patch && yarn publish --access public"
   },
   "repository": {
     "type": "git",
