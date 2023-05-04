@@ -64,7 +64,7 @@ export default class ClassValidatorProvider {
       return this
     })
     ModelQueryBuilder.macro("condiction", function (condiction) {
-      const { subQuery, ...condictions } = _.pickBy(condiction)
+      const { subQuery, ...condictions } = _.pickBy(condiction, (x) => typeof x !== "undefined")
 
       subQuery?.(this)
 
